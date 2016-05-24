@@ -82,6 +82,13 @@
 /** @} */
 
 /**
+ * @name ADC configuration
+ * @{
+ */
+#define ADC_NUMOF           (8)
+/** @} */
+
+/**
  * @name UART configuration
  * @{
  */
@@ -223,6 +230,17 @@ static const periph_spi_conf_t spi_config[SPI_NUMOF] = {
 #define CTS_DI07_PIN        3
 #define AD5_DIO5_PIN        4
 #define RTS_AD6_DIO6_PIN    5
+#define ON_SLEEP_PIN        6
+/** @} */
+
+/**
+ * @name OpenMote Pin to ADC Line Mapping
+ * @{
+ */
+#define AD4_PIN             2
+#define CTS_DI07_PIN        3
+#define AD5_PIN             4
+#define AD6_PIN             5
 #define ON_SLEEP_PIN        6
 /** @} */
 
