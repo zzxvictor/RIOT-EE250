@@ -1,5 +1,5 @@
 # name of your application
-APPLICATION = rssi_and_per
+APPLICATION = rss_and_prr
 
 # Avoid error because of warnings
 WERROR = 0

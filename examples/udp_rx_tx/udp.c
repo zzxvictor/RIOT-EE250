@@ -36,8 +36,8 @@
 #define QUEUE_SIZE 8
 #define CC2538_RSSI_OFFSET 73
 
-void print_rssi(msg_t *msg);
-void print_per(uint32_t pkt_rcv, uint32_t num_pkts);
+void print_rss(msg_t *msg);
+void print_prr(uint32_t pkt_rcv, uint32_t num_pkts);
 
 static gnrc_netreg_entry_t receiver = { NULL, GNRC_NETREG_DEMUX_CTX_ALL, {KERNEL_PID_UNDEF}};
 
@@ -124,11 +124,10 @@ int udp_tx(int argc, char **argv)
             return 1;
         }
 
-        /* access to `payload` was implicitly given up with the send operation above
-         * => use temporary variable for output */
         printf("Success: send %u byte to [%s]:%u\n", payload_size, addr_str, port);
 
         pkt_num++;
+
         xtimer_usleep(interval);
     }
 
@@ -172,7 +171,7 @@ int udp_rx(int argc, char **argv)
     msg_receive(&msg);
     
     /* Print RSSI */
-    print_rssi(&msg);
+    print_rss(&msg);
 
     /* We initialize pkt_rcv with 1 */
     uint32_t pkt_rcv = 1;
@@ -184,7 +183,7 @@ int udp_rx(int argc, char **argv)
         }
 
         /* We received one packet within the interval, lets print the RSSI */
-        print_rssi(&msg);
+        print_rss(&msg);
 
         /* And count it */
         pkt_rcv++;
@@ -196,12 +195,12 @@ int udp_rx(int argc, char **argv)
     printf("UDP experiment complete\n");
 
     /* Print the PER */
-    print_per(pkt_rcv, num_pkts);    
+    print_prr(pkt_rcv, num_pkts);    
 
     return 0;
 }
 
-void print_rssi(msg_t *msg)
+void print_rss(msg_t *msg)
 {
     if (msg->type == GNRC_NETAPI_MSG_TYPE_RCV) {
 
@@ -212,12 +211,10 @@ void print_rssi(msg_t *msg)
         /* *** TO-DO *** */
 
         /* gnrc_netif_hdr_t has information about the signal quality */
-        /* The RSSI value is equal to the RSSI from 'hdr' minus CC2538_RSSI_OFFSET */
+        /* The RSS value is equal to the RSSI from 'hdr' minus CC2538_RSSI_OFFSET */
         /* You must cast the RSSI from 'hdr' to signed integer because it is a 2-complement number */
-        /* You have to print out the RSSI of each packet received to calculate the average after the experiment */
-        /* Remember that RSSI is in dBm, so you need to convert to linear to calculate the average */
+        /* You have to print out the RSS of each packet received */
         
-
 
 
         /* Tell GNRC you are done with this packet so it can release the memory */
@@ -225,14 +222,13 @@ void print_rssi(msg_t *msg)
     }
 }
 
-void print_per(uint32_t pkt_rcv, uint32_t num_pkts)
+void print_prr(uint32_t pkt_rcv, uint32_t num_pkts)
 {
     /* *** TO-DO *** */
 
     /* You know the number of packets you were supposed to receive */
     /* and the number of packets you actually received. */
-    /* So, calculate what is the the Packet Error Rate and print out */
+    /* So, calculate what is the the Packet Reception Ratio and print out */
     
-
 
 }
