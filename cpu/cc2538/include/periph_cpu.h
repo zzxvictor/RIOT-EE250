@@ -79,5 +79,15 @@ typedef struct {
 
 #include "periph/dev_enums.h"
 
+#ifndef HAVE_ADC_T
+typedef unsigned int adc_t;
+#endif
+/**
+ * @brief Some prototypes for extra functions for ADC
+ */
+int adc_start_sampling(adc_t line, adc_res_t res);
+int adc_is_sample_ready(adc_t line, adc_res_t res);
+uint16_t adc_read_sample(adc_t line, adc_res_t res);
+
 #endif /* PERIPH_CPU_H_ */
 /** @} */

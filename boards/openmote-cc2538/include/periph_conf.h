@@ -219,6 +219,11 @@ static const periph_spi_conf_t spi_config[SPI_NUMOF] = {
  * @{
  */
 #define RADIO_IRQ_PRIO      1
+#define AD4_DIO4_PIN        2
+#define CTS_DI07_PIN        3
+#define AD5_DIO5_PIN        4
+#define RTS_AD6_DIO6_PIN    5
+#define ON_SLEEP_PIN        6
 /** @} */
 
 #ifdef __cplusplus
