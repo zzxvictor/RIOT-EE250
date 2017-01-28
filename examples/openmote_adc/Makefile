@@ -11,5 +11,6 @@ QUIET ?= 1
 >>>>>>> 2a3b96d... adc for openmote
 
 FEATURES_REQUIRED += periph_timer
+FEATURES_REQUIRED += periph_gpio
 
 include $(RIOTBASE)/Makefile.include
