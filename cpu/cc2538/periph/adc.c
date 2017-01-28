@@ -91,11 +91,7 @@ int adc_sample(adc_t line, adc_res_t res)
     }
     
     cc2538_soc_adc_t *adcaccess = SOC_ADC;
-<<<<<<< HEAD
-    uint16_t result;
-=======
     int16_t result;
->>>>>>> 2a3b96d... adc for openmote
 
     /* Note - This has been hard coded .
      *  Can choose from any of the choices below:
@@ -110,16 +106,17 @@ int adc_sample(adc_t line, adc_res_t res)
         ~(SOC_ADC_ADCCON3_EREF | SOC_ADC_ADCCON3_EDIV | SOC_ADC_ADCCON3_ECH)) |
             refvoltage | res | line;
 
+    //gpio_clear(GPIO_PIN(PORT_D,2));
     /* Poll until end of conversion */
-    while ((adcaccess->cc2538_adc_adccon1.ADCCON1 &
-        adcaccess->cc2538_adc_adccon1.ADCCON1bits.EOC) == 0);
+    //printf("Bit = %x\n", (int)(adcaccess->cc2538_adc_adccon1.ADCCON1 & 0x80));
+    while ((adcaccess->cc2538_adc_adccon1.ADCCON1 & 0x80) == 0);
+    //gpio_set(GPIO_PIN(PORT_D,2));
 
     /* Read conversion result, reading SOC_ADC_ADCH last to clear
         SOC_ADC_ADCCON1.EOC */
     result  = (((adcaccess->ADCL) & 0xfc));
     result |= (((adcaccess->ADCH) & 0xff) << 8);
 
-<<<<<<< HEAD
     switch (res)
     {
         case ADC_RES_7BIT:
@@ -208,8 +205,4 @@ uint16_t adc_read_sample(adc_t line, adc_res_t res)
 
     /* Return conversion result */
     return (int)result;
-=======
-    /* Return conversion result */
-    return result;
->>>>>>> 2a3b96d... adc for openmote
 }

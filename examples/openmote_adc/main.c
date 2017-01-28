@@ -1,84 +1,26 @@
 #include <stdio.h>
 #include "xtimer.h"
 #include "periph/adc.h"
-<<<<<<< HEAD
 #include "periph/gpio.h"
 
 #define RES             ADC_RES_12BIT
-#define DELAY           1000000UL
+#define DELAY           1000000U
 
 int main(void)
 {
-    //xtimer_ticks32_t delay;
-    //delay.ticks32 = DELAY;
 
     adc_init(AD4_DIO4_PIN);
-    
-    //gpio_hardware_control(GPIO_PXX_TO_NUM(PORT_D, 2));
-    //IOC_PXX_OVER[GPIO_PXX_TO_NUM(PORT_D, 2)] = IOC_OVERRIDE_OE;
-
-    //gpio_init(GPIO_PD2, GPIO_OUT);
-    gpio_init(GPIO_PD0, GPIO_OUT);
-    gpio_init(GPIO_PD1, GPIO_OUT);
-    gpio_init(GPIO_PD2, GPIO_OUT);
-    gpio_init(GPIO_PD3, GPIO_OUT);
-
-    gpio_set(GPIO_PD0);
-    gpio_set(GPIO_PD1);
-    gpio_set(GPIO_PD2);
-    gpio_set(GPIO_PD3);
-
-    while(1)
-    {
-        //int16_t sample = adc_sample(AD4_DIO4_PIN, RES);
-                
-        adc_start_sampling(AD4_DIO4_PIN, RES);
-        
-        //unsigned old_state = irq_disable();
-        
-
-        //gpio_set(GPIO_PD2);
-        //xtimer_spin(delay);
-        xtimer_usleep(1000000U);
-        //gpio_clear(GPIO_PD2);
-
-        if (adc_is_sample_ready(AD4_DIO4_PIN, RES) == 1) {
-            uint16_t sample = adc_read_sample(AD4_DIO4_PIN, RES);
-            printf("%d\n", sample);
-        }
-        else {
-            printf("xxxxxxxx\n");
-        }
-
-        //irq_restore(old_state);
-        //xtimer_usleep(1000000U);
-=======
-
-#define RES             ADC_RES_7BIT
-#define DELAY           (100 * 1000U)
-
-int main(void)
-{
-    uint32_t last = xtimer_now();
-    int16_t sample = 0;
+    gpio_init(GPIO_PIN(PORT_D,2), GPIO_OUT);
 
     adc_init(AD4_PIN);
 
     while(1)
     {
-        sample = adc_sample(AD4_PIN, RES);
+        int16_t sample = adc_sample(AD4_DIO4_PIN, RES);
+        printf("ADC = @%d@\n", sample);
 
-        if (sample < 0) 
-        {
-            printf("ADC error\n");
-        } 
-        else 
-        {
-            printf("ADC output %d\n", sample);
-        }
-
-        xtimer_usleep_until(&last, DELAY);
->>>>>>> 2a3b96d... adc for openmote
+        xtimer_usleep(DELAY);
+        gpio_toggle(LED0_PIN);
     }
 
     return 0;
