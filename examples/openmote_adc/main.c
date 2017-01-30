@@ -12,19 +12,31 @@ int main(void)
 
     while(1)
     {
-        sample = adc_sample(AD4_PIN, RES);
+        int16_t sample = adc_sample(AD4_DIO4_PIN, RES);
+        //gpio_set(LED0_PIN);
 
-        if (sample < 0) 
-        {
-            printf("ADC error\n");
-        } 
-        else 
-        {
-            printf("ADC output %d\n", sample);
-        }
+        //unsigned old_state = irq_disable();
 
-        xtimer_usleep_until(&last, DELAY);
-        gpio_clear(LED0_PIN);
+        //adc_start_sampling(AD4_DIO4_PIN, RES);
+        
+        //gpio_clear(GPIO_PIN(PORT_D,2));
+        //xtimer_spin(delay);
+        //xtimer_usleep(1000000U);
+        //gpio_set(GPIO_PIN(PORT_D,2));
+        
+        //if (adc_is_sample_ready(AD4_DIO4_PIN, RES) == 1) {
+            //uint16_t sample = adc_read_sample(AD4_DIO4_PIN, RES);
+            printf("ADC = %d\n", sample);
+            //printf("%d\n", adc_sample(AD4_DIO4_PIN, RES));
+        //}
+        //else {
+            //printf("xxxxxxxx\n");
+        //}
+
+        //irq_restore(old_state);
+
+        xtimer_usleep(1000000U);
+        //gpio_clear(LED0_PIN);
     }
 
     return 0;

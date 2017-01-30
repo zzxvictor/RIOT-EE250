@@ -2,7 +2,8 @@ APPLICATION = openmote_adc
 RIOTBASE ?= $(CURDIR)/../..
 <<<<<<< HEAD
 BOARD ?= openmote-cc2538
-PROGRAMMER ?= jlink
+PROGRAMMER ?= cc2538-bsl
+
 USEMODULE += xtimer
 =======
 BOARD ?= native
