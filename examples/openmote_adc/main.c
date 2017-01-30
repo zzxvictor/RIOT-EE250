@@ -4,7 +4,7 @@
 #include "periph/gpio.h"
 
 #define RES             ADC_RES_12BIT
-#define DELAY           500000U
+#define DELAY           1000000U
 
 int main(void)
 {
@@ -16,13 +16,11 @@ int main(void)
 
     while(1)
     {
-        gpio_set(LED0_PIN);
-
         int16_t sample = adc_sample(AD4_DIO4_PIN, RES);
         printf("ADC = @%d@\n", sample);
 
         xtimer_usleep(DELAY);
-        gpio_clear(LED0_PIN);
+        gpio_toggle(LED0_PIN);
     }
 
     return 0;

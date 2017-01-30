@@ -91,11 +91,7 @@ int adc_sample(adc_t line, adc_res_t res)
     }
     
     cc2538_soc_adc_t *adcaccess = SOC_ADC;
-<<<<<<< HEAD
-    uint16_t result;
-=======
     int16_t result;
->>>>>>> 2a3b96d... adc for openmote
 
     /* Note - This has been hard coded .
      *  Can choose from any of the choices below:
@@ -121,7 +117,6 @@ int adc_sample(adc_t line, adc_res_t res)
     result  = (((adcaccess->ADCL) & 0xfc));
     result |= (((adcaccess->ADCH) & 0xff) << 8);
 
-<<<<<<< HEAD
     switch (res)
     {
         case ADC_RES_7BIT:
@@ -210,8 +205,4 @@ uint16_t adc_read_sample(adc_t line, adc_res_t res)
 
     /* Return conversion result */
     return (int)result;
-=======
-    /* Return conversion result */
-    return result;
->>>>>>> 2a3b96d... adc for openmote
 }
