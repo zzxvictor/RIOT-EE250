@@ -1,4 +1,5 @@
-APPLICATION = openmote_adc
+APPLICATION = lab3_adc
+
 RIOTBASE ?= $(CURDIR)/../..
 BOARD ?= openmote-cc2538
 PROGRAMMER ?= cc2538-bsl
