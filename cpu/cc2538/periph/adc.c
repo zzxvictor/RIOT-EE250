@@ -106,11 +106,10 @@ int adc_sample(adc_t line, adc_res_t res)
         ~(SOC_ADC_ADCCON3_EREF | SOC_ADC_ADCCON3_EDIV | SOC_ADC_ADCCON3_ECH)) |
             refvoltage | res | line;
 
-    //gpio_clear(GPIO_PIN(PORT_D,2));
+    gpio_set(GPIO_PIN(PORT_D,2));
     /* Poll until end of conversion */
-    //printf("Bit = %x\n", (int)(adcaccess->cc2538_adc_adccon1.ADCCON1 & 0x80));
     while ((adcaccess->cc2538_adc_adccon1.ADCCON1 & 0x80) == 0);
-    //gpio_set(GPIO_PIN(PORT_D,2));
+    gpio_clear(GPIO_PIN(PORT_D,2));
 
     /* Read conversion result, reading SOC_ADC_ADCH last to clear
         SOC_ADC_ADCCON1.EOC */
