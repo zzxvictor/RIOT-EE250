@@ -27,6 +27,7 @@
 #include "net/gnrc/nettype.h"
 #include "net/netdev2.h"
 
+#include "net/gnrc/csma_sender.h"
 #include "net/gnrc/netdev2.h"
 #include "net/ethernet/hdr.h"
 
@@ -143,7 +144,9 @@ static void *_gnrc_netdev2_thread(void *args)
             case GNRC_NETAPI_MSG_TYPE_SND:
                 DEBUG("gnrc_netdev2: GNRC_NETAPI_MSG_TYPE_SND received\n");
                 gnrc_pktsnip_t *pkt = msg.content.ptr;
-                gnrc_netdev2->send(gnrc_netdev2, pkt);
+
+                csma_ca_send(gnrc_netdev2, dev, pkt);
+                //gnrc_netdev2->send(gnrc_netdev2, pkt);
                 break;
             case GNRC_NETAPI_MSG_TYPE_SET:
                 /* read incoming options */
