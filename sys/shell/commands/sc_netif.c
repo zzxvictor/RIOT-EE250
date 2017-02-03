@@ -1045,9 +1045,10 @@ int _netif_send(int argc, char **argv)
     gnrc_pktsnip_t *pkt, *hdr;
     gnrc_netif_hdr_t *nethdr;
     uint8_t flags = 0x00;
+    unsigned int n_pkts, interval;
 
     if (argc < 4) {
-        printf("usage: %s <if> [<L2 addr>|bcast] <data>\n", argv[0]);
+        printf("usage: %s <if> [<L2 addr>|bcast] <n_pkts> <interval> <data>\n", argv[0]);
         return 1;
     }
 
@@ -1072,32 +1073,41 @@ int _netif_send(int argc, char **argv)
         }
     }
 
+    n_pkts = atoi(argv[3]);
+    interval = atoi(argv[4]);
+
     /* put packet together */
-    data_len = strlen(argv[3]);
-    if (data_len == 0) {
-        pkt = NULL;
-    }
-    else {
-        pkt = gnrc_pktbuf_add(NULL, argv[3], data_len, GNRC_NETTYPE_UNDEF);
-        if (pkt == NULL) {
+    data_len = strlen(argv[5]);
+
+    for (uint32_t i = 0; i < n_pkts || n_pkts == 0; i++)
+    {
+        if (data_len == 0) {
+            pkt = NULL;
+        }
+        else {
+            pkt = gnrc_pktbuf_add(NULL, argv[5], data_len, GNRC_NETTYPE_UNDEF);
+            if (pkt == NULL) {
+                puts("error: packet buffer full");
+                return 1;
+            }
+        }
+        hdr = gnrc_netif_hdr_build(NULL, 0, addr, addr_len);
+        if (hdr == NULL) {
             puts("error: packet buffer full");
+            gnrc_pktbuf_release(pkt);
             return 1;
         }
-    }
-    hdr = gnrc_netif_hdr_build(NULL, 0, addr, addr_len);
-    if (hdr == NULL) {
-        puts("error: packet buffer full");
-        gnrc_pktbuf_release(pkt);
-        return 1;
-    }
-    LL_PREPEND(pkt, hdr);
-    nethdr = (gnrc_netif_hdr_t *)hdr->data;
-    nethdr->flags = flags;
-    /* and send it */
-    if (gnrc_netapi_send(dev, pkt) < 1) {
-        puts("error: unable to send");
-        gnrc_pktbuf_release(pkt);
-        return 1;
+        LL_PREPEND(pkt, hdr);
+        nethdr = (gnrc_netif_hdr_t *)hdr->data;
+        nethdr->flags = flags;
+        /* and send it */
+        if (gnrc_netapi_send(dev, pkt) < 1) {
+            puts("error: unable to send");
+            gnrc_pktbuf_release(pkt);
+            return 1;
+        }
+
+        xtimer_usleep(interval);
     }
 
     return 0;
