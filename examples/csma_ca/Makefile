@@ -35,26 +35,24 @@ BOARD_PROVIDES_NETIF := airfy-beacon cc2538dk fox iotlab-m3 iotlab-a8-m3 mulle \
         remote-pa remote-reva saml21-xpro samr21-xpro spark-core telosb \
         yunjia-nrf51822 z1
 
-ifneq (,$(filter $(BOARD),$(BOARD_PROVIDES_NETIF)))
-  # Use modules for networking
-  # gnrc is a meta module including all required, basic gnrc networking modules
-  USEMODULE += gnrc
-  # use the default network interface for the board
-  USEMODULE += gnrc_netdev_default
-  # automatically initialize the network interface
-  USEMODULE += auto_init_gnrc_netif
-  # the application dumps received packets to stdout
-  USEMODULE += gnrc_pktdump
+# gnrc is a meta module including all required, basic gnrc networking modules
+USEMODULE += gnrc
+# use the default network interface for the board
+USEMODULE += gnrc_netdev_default
+# automatically initialize the network interface
+USEMODULE += auto_init_gnrc_netif
+# the application dumps received packets to stdout
+USEMODULE += gnrc_pktdump
 
-  # We use only the lower layers of the GNRC network stack, hence, we can
-  # reduce the size of the packet buffer a bit
-  CFLAGS += -DGNRC_PKTBUF_SIZE=512
-endif
+# We use only the lower layers of the GNRC network stack, hence, we can
+# reduce the size of the packet buffer a bit
+CFLAGS += -DGNRC_PKTBUF_SIZE=512
 
 FEATURES_OPTIONAL += config
 
 # Set a custom 802.15.4 channel if needed
-DEFAULT_CHANNEL ?= 13
+#DEFAULT_CHANNEL ?= 13
+
 CFLAGS += -DDEFAULT_CHANNEL=$(DEFAULT_CHANNEL)
 
 include $(RIOTBASE)/Makefile.include
