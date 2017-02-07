@@ -1,0 +1,58 @@
+# name of your application
+APPLICATION = default
+
+# If no BOARD is found in the environment, use this default:
+BOARD ?= openmote-cc2538
+
+PROGRAMMER ?= cc2538-bsl
+
+# This has to be the absolute path to the RIOT base directory:
+RIOTBASE ?= $(CURDIR)/../..
+
+# Comment this out to disable code in RIOT that does safety checking
+# which is not needed in a production environment but helps in the
+# development process:
+CFLAGS += -DDEVELHELP
+
+# Change this to 0 show compiler invocation lines by default:
+QUIET ?= 1
+
+# Modules to include:
+USEMODULE += shell
+USEMODULE += shell_commands
+USEMODULE += ps
+USEMODULE += config
+# include and auto-initialize all available sensors
+USEMODULE += saul_reg
+USEMODULE += saul_default
+USEMODULE += auto_init_saul
+USEMODULE += xtimer
+
+FEATURES_REQUIRED += periph_timer
+
+BOARD_PROVIDES_NETIF := airfy-beacon cc2538dk fox iotlab-m3 iotlab-a8-m3 mulle \
+        native nrf51dongle nrf6310 openmote-cc2538 pba-d-01-kw2x pca10000 pca10005 \
+        remote-pa remote-reva saml21-xpro samr21-xpro spark-core telosb \
+        yunjia-nrf51822 z1
+
+# gnrc is a meta module including all required, basic gnrc networking modules
+USEMODULE += gnrc
+# use the default network interface for the board
+USEMODULE += gnrc_netdev_default
+# automatically initialize the network interface
+USEMODULE += auto_init_gnrc_netif
+# the application dumps received packets to stdout
+USEMODULE += gnrc_pktdump
+
+# We use only the lower layers of the GNRC network stack, hence, we can
+# reduce the size of the packet buffer a bit
+CFLAGS += -DGNRC_PKTBUF_SIZE=512
+
+FEATURES_OPTIONAL += config
+
+# Set a custom 802.15.4 channel if needed
+DEFAULT_CHANNEL ?= 25
+
+CFLAGS += -DDEFAULT_CHANNEL=$(DEFAULT_CHANNEL)
+
+include $(RIOTBASE)/Makefile.include

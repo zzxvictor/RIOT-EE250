@@ -23,7 +23,7 @@
 #ifndef GNRC_CSMA_SENDER_H_
 #define GNRC_CSMA_SENDER_H_
 
-#include "kernel.h"
+#include "net/gnrc/netdev2.h"
 #include "net/gnrc.h"
 
 
@@ -97,7 +97,7 @@ void set_csma_mac_max_csma_backoffs(uint8_t val);
  * @return              -EBUSY if radio medium never was available
  *                      to send the given data
  */
-int csma_ca_send(gnrc_netdev_t *dev, gnrc_pktsnip_t *pkt);
+int csma_ca_send(gnrc_netdev2_t *gnrc_netdev2, netdev2_t *dev, gnrc_pktsnip_t *pkt);
 
 /**
  * @brief   Sends a 802.15.4 frame when medium is avaiable.
@@ -124,8 +124,7 @@ int csma_ca_send(gnrc_netdev_t *dev, gnrc_pktsnip_t *pkt);
  * @return              -EBUSY if radio medium was not available
  *                      to send the given data
  */
-int cca_send(gnrc_netdev_t *dev, gnrc_pktsnip_t *pkt);
-
+int cca_send(gnrc_netdev2_t *gnrc_netdev2, netdev2_t *dev, gnrc_pktsnip_t *pkt);
 
 #ifdef __cplusplus
 }
