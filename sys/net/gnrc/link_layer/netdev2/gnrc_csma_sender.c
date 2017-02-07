@@ -18,6 +18,11 @@
 
 #include <errno.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <inttypes.h>
 
 #include "xtimer.h"
 #include "random.h"
@@ -25,7 +30,7 @@
 #include "net/gnrc.h"
 #include "net/netopt.h"
 
-#define ENABLE_DEBUG    (1)
+#define ENABLE_DEBUG    (0)
 #include "debug.h"
 
 #if ENABLE_DEBUG
@@ -62,14 +67,13 @@ static inline uint32_t choose_backoff_period(int be)
     if (be > mac_max_be) {
         be = mac_max_be;
     }
-    uint32_t max_backoff = ((1 << be) - 1) * A_UNIT_BACKOFF_PERIOD_MICROSEC;
 
-    uint32_t period = random_uint32() % max_backoff;
-    if (period < A_UNIT_BACKOFF_PERIOD_MICROSEC) {
-        period = A_UNIT_BACKOFF_PERIOD_MICROSEC;
-    }
+    uint32_t n_unit_backoff = random_uint32() % (1 << be);
 
-    DEBUG("csma: Backoff period chosen %ld\n", period);
+    uint32_t period = n_unit_backoff * A_UNIT_BACKOFF_PERIOD_MICROSEC;
+    
+    DEBUG("csma: Backoff period chosen %ld us\n", period);
+    printf("csma: backoff %ld us\n", period);
     return period;
 }
 
@@ -168,7 +172,7 @@ int csma_ca_send(gnrc_netdev2_t *gnrc_netdev2, netdev2_t *dev, gnrc_pktsnip_t *p
     /* if we arrive here, then we must perform the CSMA/CA procedure
        ourselves by software */
     random_init(xtimer_now());
-    DEBUG("csma: Starting software CSMA/CA....\n");
+    DEBUG("\ncsma: Starting software CSMA/CA....\n");
 
     int nb = 0, be = mac_min_be;
 
@@ -189,7 +193,6 @@ int csma_ca_send(gnrc_netdev2_t *gnrc_netdev2, netdev2_t *dev, gnrc_pktsnip_t *p
         }
 
         /* medium is busy: increment CSMA counters */
-        DEBUG("csma: Radio medium busy.\n");
         be++;
         if (be > mac_max_be) {
             be = mac_max_be;
@@ -207,8 +210,6 @@ int csma_ca_send(gnrc_netdev2_t *gnrc_netdev2, netdev2_t *dev, gnrc_pktsnip_t *p
 int cca_send(gnrc_netdev2_t *gnrc_netdev2, netdev2_t *dev, gnrc_pktsnip_t *pkt)
 {
     netopt_enable_t hwfeat;
-
-    printf("*** At CCA send ***\n");
 
     /* Does the transceiver do automatic CCA before sending? */
     int res = dev->driver->get(dev, 

@@ -1046,9 +1046,10 @@ int _netif_send(int argc, char **argv)
     gnrc_netif_hdr_t *nethdr;
     uint8_t flags = 0x00;
     unsigned int n_pkts, interval;
+    char data_to_send[100];
 
     if (argc < 4) {
-        printf("usage: %s <if> [<L2 addr>|bcast] <n_pkts> <interval> <data>\n", argv[0]);
+        printf("usage: %s <if> [<L2 addr>|bcast] <n_pkts> (0 for infinite) <interval>\n", argv[0]);
         return 1;
     }
 
@@ -1077,15 +1078,22 @@ int _netif_send(int argc, char **argv)
     interval = atoi(argv[4]);
 
     /* put packet together */
-    data_len = strlen(argv[5]);
+    //data_len = strlen(argv[5]);
+    data_len = 100;
+    for (uint8_t i = 100; i > 0; i--)
+    {
+        data_to_send[i] = i;
+    }
 
     for (uint32_t i = 0; i < n_pkts || n_pkts == 0; i++)
     {
+        printf("\ntxtsnd: pkt #%ld\n", i);
         if (data_len == 0) {
             pkt = NULL;
         }
         else {
-            pkt = gnrc_pktbuf_add(NULL, argv[5], data_len, GNRC_NETTYPE_UNDEF);
+            //pkt = gnrc_pktbuf_add(NULL, argv[5], data_len, GNRC_NETTYPE_UNDEF);
+            pkt = gnrc_pktbuf_add(NULL, data_to_send, data_len, GNRC_NETTYPE_UNDEF);
             if (pkt == NULL) {
                 puts("error: packet buffer full");
                 return 1;
@@ -1110,6 +1118,7 @@ int _netif_send(int argc, char **argv)
         xtimer_usleep(interval);
     }
 
+    printf("\ntxtsnd: done!\n");
     return 0;
 }
 
