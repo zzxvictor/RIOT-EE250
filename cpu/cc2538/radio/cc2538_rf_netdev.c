@@ -297,10 +297,10 @@ static int _recv(netdev2_t *netdev, void *buf, size_t len, void *info)
 {
     size_t pkt_len;
 
-    /*if (RFCORE_XREG_RXFIFOCNT == 0) {
+    if (RFCORE_XREG_RXFIFOCNT == 0) {
         RFCORE_SFR_RFST = ISFLUSHRX;
         return -ENODATA;
-    }*/
+    }
 
     if (buf == NULL) {
         /* GNRC wants to know how much data we've got for it */
