@@ -78,6 +78,21 @@ extern "C" {
 /** @} */
 
 /**
+ * @brief   Channel ranges
+ * @{
+ */
+/**
+ * @brief   Minimum channel for sub-GHz band
+ */
+#define IEEE802154_CHANNEL_MIN_SUBGHZ   (0U)
+#define IEEE802154_CHANNEL_MAX_SUBGHZ   (10U)   /**< Maximum channel for sub-GHz band */
+#define IEEE802154_CHANNEL_MIN          (11U)   /**< Minimum channel for 2.4 GHz band */
+#define IEEE802154_CHANNEL_MAX          (26U)   /**< Maximum channel for 2.4 GHz band */
+/** @} */
+
+#define IEEE802154_FRAME_LEN_MAX        (127U)  /**< maximum frame length */
+
+/**
  * @brief   Flag for @ref ieee802154_set_frame_hdr to indicate to ignore @p dst
  *          and @p dst_len and send broadcast.
  * @note    This flag is RIOT internal and shall not be used in the FCF of
