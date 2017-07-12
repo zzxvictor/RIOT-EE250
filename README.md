@@ -1,28 +1,15 @@
-                          ZZZZZZ
-                        ZZZZZZZZZZZZ
-                      ZZZZZZZZZZZZZZZZ
-                     ZZZZZZZ     ZZZZZZ
-                    ZZZZZZ        ZZZZZ
-                    ZZZZZ          ZZZZ
-                    ZZZZ           ZZZZZ
-                    ZZZZ           ZZZZ
-                    ZZZZ          ZZZZZ
-                    ZZZZ        ZZZZZZ
-                    ZZZZ     ZZZZZZZZ       777        7777       7777777777
-              ZZ    ZZZZ   ZZZZZZZZ         777      77777777    77777777777
-          ZZZZZZZ   ZZZZ  ZZZZZZZ           777     7777  7777       777
-        ZZZZZZZZZ   ZZZZ    Z               777     777    777       777
-       ZZZZZZ       ZZZZ                    777     777    777       777
-      ZZZZZ         ZZZZ                    777     777    777       777
-     ZZZZZ          ZZZZZ    ZZZZ           777     777    777       777
-     ZZZZ           ZZZZZ    ZZZZZ          777     777    777       777
-     ZZZZ           ZZZZZ     ZZZZZ         777     777    777       777
-     ZZZZ           ZZZZ       ZZZZZ        777     777    777       777
-     ZZZZZ         ZZZZZ        ZZZZZ       777     777    777       777
-      ZZZZZZ     ZZZZZZ          ZZZZZ      777     7777777777       777
-       ZZZZZZZZZZZZZZZ            ZZZZ      777      77777777        777
-         ZZZZZZZZZZZ               Z
-            ZZZZZ
+## DESCRIPTION
+This is a RIOT-OS-forked used in teaching EE499 at USC in Spring 2017.
+
+You may find in branchs ee499_labs_stable and ee499_labs_develop the code used for some of the experiments.
+
+Branch ee499_labs_develop is used for testing. And branch ee499_labs_stable is used during classes.
+
+Checkout the most recent commits to see the experiments that were developed.
+
+Most of the code changed is inside *example* folder.
+
+## RIOT-OS
 
 The friendly Operating System for IoT!
 
