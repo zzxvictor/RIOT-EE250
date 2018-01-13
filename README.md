@@ -1,9 +1,11 @@
 ## DESCRIPTION
-This is a RIOT-OS-forked used in teaching EE499 at USC in Spring 2017.
+This is a fork of RIOT-OS used to teach EE 250 at USC.
 
-You may find in branchs ee499_labs_stable and ee499_labs_develop the code used for some of the experiments.
+EE 499 Spring 2017 (name before EE 250):
 
-Branch ee499_labs_develop is used for testing. And branch ee499_labs_stable is used during classes.
+You may find in branches ee499_labs_stable and ee499_labs_develop the code used for some of the experiments.
+
+Branch ee499_labs_develop is used for testing, and branch ee499_labs_stable is used for classes.
 
 Checkout the most recent commits to see the experiments that were developed.
 
