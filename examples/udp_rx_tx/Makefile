@@ -38,15 +38,12 @@ USEMODULE += shell_commands
 USEMODULE += ps
 USEMODULE += netstats_l2
 USEMODULE += netstats_ipv6
-
-# Set a custom 802.15.4 channel if needed
-DEFAULT_CHANNEL ?= 12
-CFLAGS += -DDEFAULT_CHANNEL=$(DEFAULT_CHANNEL)
+USEMODULE += netstats_rpl
 
 # Comment this out to disable code in RIOT that does safety checking
 # which is not needed in a production environment but helps in the
 # development process:
-CFLAGS += -DDEVELHELP
+DEVELHELP ?= 1
 
 # Comment this out to join RPL DODAGs even if DIOs do not contain
 # DODAG Configuration Options (see the doc for more info)
@@ -56,3 +53,17 @@ CFLAGS += -DDEVELHELP
 QUIET ?= 1
 
 include $(RIOTBASE)/Makefile.include
+
+# Set a custom channel if needed
+ifneq (,$(filter cc110x,$(USEMODULE)))          # radio is cc110x sub-GHz
+  DEFAULT_CHANNEL ?= 0
+  CFLAGS += -DCC110X_DEFAULT_CHANNEL=$(DEFAULT_CHANNEL)
+else
+  ifneq (,$(filter at86rf212b,$(USEMODULE)))    # radio is IEEE 802.15.4 sub-GHz
+    DEFAULT_CHANNEL ?= 5
+    FLAGS += -DIEEE802154_DEFAULT_SUBGHZ_CHANNEL=$(DEFAULT_CHANNEL)
+  else                                          # radio is IEEE 802.15.4 2.4 GHz
+    DEFAULT_CHANNEL ?= 26
+    CFLAGS += -DIEEE802154_DEFAULT_CHANNEL=$(DEFAULT_CHANNEL)
+  endif
+endif
