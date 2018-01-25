@@ -9,7 +9,7 @@ WERROR = 0
 BOARD ?= openmote-cc2538
 
 # Use `jlink` to flash over jtag or `cc2538-bsl` to flash over UART
-PROGRAMMER ?= jlink
+PROGRAMMER ?= cc2538-bsl
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../..

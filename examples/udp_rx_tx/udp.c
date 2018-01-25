@@ -221,6 +221,7 @@ int udp_rx(int argc, char **argv)
 
 void print_rss(msg_t *msg)
 {
+
     if (msg->type == GNRC_NETAPI_MSG_TYPE_RCV) {
 
         gnrc_pktsnip_t *pkt = msg->content.ptr;
@@ -235,6 +236,7 @@ void print_rss(msg_t *msg)
          * have to print out the RSS of each packet received. Feel free make any
          * changes to help you finish the lab faster 
         */
+	printf("The RSS value is : ", (*(hdr->rssi)-CC2538_RSSI_OFFSET)  );
 
         /* Tell GNRC you are done with this packet so it can release the memory */
         gnrc_pktbuf_release(pkt);
@@ -250,6 +252,9 @@ void print_prr(uint32_t pkt_rcv, uint32_t num_pkts)
      * of packets you actually received. Calculate the Packet Reception Ratio 
      * and print it out 
      */
+	float prr =0.0;
+	prr = ((float)pkt_rcv/(float)num_pkts);
+	printf("The PRR is : ", prr);
     
 
 }
