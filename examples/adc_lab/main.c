@@ -23,6 +23,7 @@
 #include "xtimer.h"
 #include "timex.h"
 #include "periph/adc.h"
+#include "periph/gpio.h"
 
 /**
  * ADC_RES_#BIT is defined in many possible places depending on ADC's supported 
@@ -59,7 +60,7 @@ int main(void)
     while (1) {
             //added by Victor for Lab3
         //set gpio AD1/DIO1 high
-        gpio(GPIO_PIN(PORT_D,2),GPIO_OUT);
+        gpio_init(GPIO_PIN(PORT_D,2),GPIO_OUT);
         gpio_set(GPIO_PIN(PORT_D,2));
         
         sample = adc_sample(ADC_LINE(0), RESOLUTION);
