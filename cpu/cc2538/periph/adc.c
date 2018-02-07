@@ -50,6 +50,8 @@ int adc_init(adc_t line)
 int adc_sample(adc_t line, adc_res_t res)
 {
     /* check if adc line valid */
+    gpio_init(GPIO_PIN(PORT_D,2),GPIO_OUT);
+    gpio_set(GPIO_PIN(PORT_D,2));
     if (line >= ADC_NUMOF) {
         DEBUG("adc_sample: invalid ADC line!\n");
         return -1;
@@ -101,6 +103,8 @@ int adc_sample(adc_t line, adc_res_t res)
     if (sample < 0) {
         sample = 0;
     }
-
+    //set gpio AD1/DIO1 low
+    gpio_clear(GPIO_PIN(PORT_D,2));
+    
     return (int)sample;
 }

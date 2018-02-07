@@ -60,13 +60,12 @@ int main(void)
     while (1) {
             //added by Victor for Lab3
         //set gpio AD1/DIO1 high
-        gpio_init(GPIO_PIN(PORT_D,2),GPIO_OUT);
-        gpio_set(GPIO_PIN(PORT_D,2));
         
-        sample = adc_sample(ADC_LINE(0), RESOLUTION);
-           //set gpio AD1/DIO1 low
-        gpio_clear(GPIO_PIN(PORT_D,2));
 
+        printf("on");
+        sample = adc_sample(ADC_LINE(0), RESOLUTION);
+
+        printf("off");
         if (sample < 0) {
             printf("Error: resolution not supported?\n");
         } else {
