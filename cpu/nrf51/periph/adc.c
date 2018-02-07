@@ -22,6 +22,7 @@
 #include "mutex.h"
 #include "periph/adc.h"
 #include "periph_conf.h"
+#include "gpio.h"
 
 /**
  * @brief   Load the ADC configuration
@@ -60,6 +61,9 @@ int adc_sample(adc_t line, adc_res_t res)
     int val;
 
     /* check if resolution is valid */
+
+
+
     if (res > 2) {
         return -1;
     }
@@ -82,5 +86,6 @@ int adc_sample(adc_t line, adc_res_t res)
     /* free device */
     done();
 
+ 
     return val;
 }
